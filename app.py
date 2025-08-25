@@ -6,9 +6,11 @@ import os
 # -------------------------------
 # Load trained pipeline + metadata
 # -------------------------------
-# Get script directory safely
-script_dir = os.path.dirname(__file__)
-if script_dir == "":  # happens on local run sometimes
+try:
+    script_dir = os.path.dirname(__file__)
+    if not script_dir:  # if it's empty string
+        script_dir = os.getcwd()
+except NameError:  # __file__ may not exist
     script_dir = os.getcwd()
 
 # Safe model path
@@ -42,6 +44,7 @@ if st.button("Predict Car Price"):
     )
     prediction = pipe.predict(input_df)[0]
     st.success(f"Estimated Selling Price: Rs.{prediction:.2f} Lakhs")
+
 
 
 
