@@ -6,12 +6,13 @@ import os
 # -------------------------------
 # Load trained pipeline + metadata
 # -------------------------------
-# Debug: show where we are and list files
-st.write("Working directory:", os.getcwd())
-st.write("Files in script folder:", os.listdir(os.path.dirname(__file__)))
+# Get script directory safely
+script_dir = os.path.dirname(__file__)
+if script_dir == "":  # happens on local run sometimes
+    script_dir = os.getcwd()
 
-# Safe path for model file
-model_path = os.path.join(os.path.dirname(__file__), "LinearRegressionModel.joblib")
+# Safe model path
+model_path = os.path.join(script_dir, "LinearRegressionModel.joblib")
 saved = joblib.load(model_path)
 
 pipe = saved["model"]
@@ -41,6 +42,7 @@ if st.button("Predict Car Price"):
     )
     prediction = pipe.predict(input_df)[0]
     st.success(f"Estimated Selling Price: Rs.{prediction:.2f} Lakhs")
+
 
 
 
