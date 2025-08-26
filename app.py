@@ -45,8 +45,4 @@ if st.button("Predict Car Price"):
     prediction = pipe.predict(input_df)[0]
     st.success(f"Estimated Selling Price: Rs.{prediction:.2f} Lakhs")
 
-
-
-
-
-
+ 
